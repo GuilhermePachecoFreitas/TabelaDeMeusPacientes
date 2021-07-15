@@ -74,6 +74,7 @@
 		<!-- ... -->
 <section class="container">
     <h2 id="titulo-form">Adicionar novo paciente</h2>
+    <ul id="mensage-erro"></ul>
     <form id="form-adiciona" >
         <div class="grupo">
             <label for="nome">Nome:</label>
@@ -112,39 +113,27 @@
 				var altura = tdAltura.textContent;
 				var tdImc = paciente.querySelector(".info-imc");
 
-				var pesoValido = true;
-				var alturaValida = true;
+				
+				var pesoValido = validaPeso(peso);
+				var alturaValida = validaAltura(altura)
 
-				if (peso <= 0){
-					console.log("Peso invalido");
-					pesoValido = false;
-					tdImc.textContent = "Peso invalido";
-					paciente.style.color = "red";
-				}
-				if (peso >= 1000){
-					console.log("Peso invalido");
-					pesoValido = false;
-					tdImc.textContent = "Peso invalido";
-					paciente.style.color = "red";
-				}
-				if (altura <= 0){
-					console.log("Altura invalida");
-					alturaValida = false;
-					tdImc.textContent = "Altura invalida";
-					paciente.style.color = "red";
-				}
-				if (altura >= 3.00){
-					console.log("Altura invalida");
-					alturaValida = false;
-					tdImc.textContent = "Altura invalida";
-					paciente.style.color = "red";
-				}
+				if (!pesoValido) {
+		    	console.log("Peso inválido!");
+    			pesoEhValido = false;
+    			tdImc.textContent = "Peso inválido!";
+    			paciente.style.color = "red";
+				}	
+ 				if (!alturaValida) {
+    			console.log("Altura inválida!");
+    			alturaEhValida = false;
+    			tdImc.textContent = "Altura inválida!";
+    			paciente.style.color = "red";
+				}				
 				if (alturaValida && pesoValido){
 				var imc = calculaImc(peso,altura);
 				tdImc.textContent = imc;
 				}
 				}
-
 				function validaPeso(peso){
 					if(peso >= 0 && peso < 1000){
 						return true;
@@ -175,8 +164,16 @@
 
 					var paciente = obtemPacienteDoFormulario(form);
 
-
 					var pacienteTr = montaTr(paciente);
+
+					var erros = validaPaciente(paciente);
+
+					if(erros.length > 0){
+						var mensagemErro = document.querySelector("#mensage-erro");
+						mensagemErro.textContent = erros;
+						return;
+
+					}
 
 					var tabela = document.querySelector("#tabela-pacientes");
 					tabela.appendChild(pacienteTr);
@@ -216,6 +213,16 @@
 					td.classList.add(classe)
 
 					return td;
+				}
+				function validaPaciente(paciente){
+
+					var erros = [];
+
+					if(!validaPeso(paciente.peso)) erros.push("Peso é inválida")
+					if(!validaAltura(paciente.altura)) erros.push("A altura é inválida")
+
+					return erros;
+
 				}
 			</script>
 	</body>
