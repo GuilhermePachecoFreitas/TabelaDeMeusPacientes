@@ -17,6 +17,9 @@
 		<main>
 			<section class="container">
 				<h2>Meus pacientes</h2>
+				<label for="filtar-tabela">Filtre:</label>
+				<input type="text" name="filitro" id="filitar-tabela"
+				placeholder="Digite o nome do paciente.">
 				<table>
 					<thead>
 						<tr>
@@ -252,6 +255,10 @@
 					event.target.parentNode.remove();
 					alert("Paciente removido com sucesso.");
 				});
-			</script>
-	</body>
+				var campoFiltro  = document.querySelector("#filtrar-tabela");
+
+				campoFiltro.addEventListener("input", function(){
+					console.log("Digitaram aqui");
+				}
+		</body>
 </html>
