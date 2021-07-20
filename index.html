@@ -17,9 +17,6 @@
 		<main>
 			<section class="container">
 				<h2>Meus pacientes</h2>
-				<label for="filtar-tabela">Filtre:</label>
-				<input type="text" name="filitro" id="filitar-tabela"
-				placeholder="Digite o nome do paciente.">
 				<table>
 					<thead>
 						<tr>
@@ -77,7 +74,7 @@
 		<!-- ... -->
 <section class="container">
     <h2 id="titulo-form">Adicionar novo paciente</h2>
-    <ul id="mensagens-erro"></ul>
+    <ul id="mensage-erro"></ul>
     <form id="form-adiciona" >
         <div class="grupo">
             <label for="nome">Nome:</label>
@@ -170,10 +167,10 @@
 					var pacienteTr = montaTr(paciente);
 
 					var erros = validaPaciente(paciente);
-					console.log(erros);
 
 					if(erros.length > 0){
-						exibeMensagensDeErro(erros);
+						var mensagemErro = document.querySelector("#mensage-erro");
+						mensagemErro.textContent = erros;
 						return;
 
 					}
@@ -182,21 +179,7 @@
 					tabela.appendChild(pacienteTr);
 
 					form.reset();
-					var mensagensErro = document.querySelector("#mensagens-erro");
-					mensagensErro.innerHTML = " ";
 				})
-
-				function exibeMensagensDeErro(erros){
-					var ul = document.querySelector("#mensagens-erro");
-					ul.innerHTML = " ";
-
-					erros.forEach(function(erro){
-						var li = document.createElement("li");
-						li.textContent = erro;
-						ul.appendChild(li);
-					});
-
-				}
 
 				function obtemPacienteDoFormulario(form){
 
@@ -235,30 +218,12 @@
 
 					var erros = [];
 
-					if(paciente.nome.length == 0)erros.push("Nome não pode estar em branco");
-					if(!validaPeso(paciente.peso)) erros.push("Peso é inválida");
-					if(!validaAltura(paciente.altura)) erros.push("Altura é inválida");
-					if(paciente.gordura.length == 0)erros.push("Gordura não pode ser em branco");
-					if(paciente.peso.length == 0)erros.push("Peso não pode estar em branco");
-					if(paciente.altura.length == 0)erros.push("Altura não pode estar e branco")
+					if(!validaPeso(paciente.peso)) erros.push("Peso é inválida")
+					if(!validaAltura(paciente.altura)) erros.push("A altura é inválida")
 
 					return erros;
 
 				}
-
-
-				var pacientes = document.querySelectorAll(".paciente");
-
-				var tabela = document.querySelector("table");
-
-				tabela.addEventListener("dblclick", function(event){
-					event.target.parentNode.remove();
-					alert("Paciente removido com sucesso.");
-				});
-				var campoFiltro  = document.querySelector("#filtrar-tabela");
-
-				campoFiltro.addEventListener("input", function(){
-					console.log("Digitaram aqui");
-				}
-		</body>
+			</script>
+	</body>
 </html>
