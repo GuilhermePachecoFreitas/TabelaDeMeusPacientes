@@ -260,11 +260,27 @@
     			xhr.open("GET", "https://api-pacientes.herokuapp.com/pacientes");
 
     			xhr.addEventListener("load", function(){
-    				console.log(xhr.responseText)
+
+    				if( xhr.status == 200){
+    					    				var resposta = xhr.responseText;
+    				var pacientes = JSON.parse(resposta)
+
+    				pacientes.forEach( function(paciente){
+    				var pacienteTr = montaTr(paciente);
+    				var tabela = document.querySelector("#tabela-pacientes");
+    				tabela.appendChild(pacienteTr);
+
+    				})
+
+    			}else{
+    					console.log( xhr.status);
+    					console.log( xhr.responseText);
+    			}
     			});
 
     			xhr.send();
     		});
+
 			</script>
 	</body>
 </html>
