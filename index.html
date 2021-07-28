@@ -254,32 +254,35 @@
 			});
 
 				var botaoAdicionar = document.querySelector("#buscar-pacientes");
+				var perguntaApi; 
 				botaoAdicionar.addEventListener("click", function(){
+    				perguntaApi = window.prompt("Coloque o link da sua API aqui:")
+    				console.log(perguntaApi);	
     			var xhr = new XMLHttpRequest();
 
-    			xhr.open("GET", "https://api-pacientes.herokuapp.com/pacientes");
+    			
+    				xhr.open("GET", perguntaApi);
 
-    			xhr.addEventListener("load", function(){
+    				xhr.addEventListener("load", function(){
 
-    				if( xhr.status == 200){
-    					    				var resposta = xhr.responseText;
+    			if( xhr.status == 200){
+    				var resposta = xhr.responseText;
     				var pacientes = JSON.parse(resposta)
 
     				pacientes.forEach( function(paciente){
-    				var pacienteTr = montaTr(paciente);
-    				var tabela = document.querySelector("#tabela-pacientes");
-    				tabela.appendChild(pacienteTr);
-
-    				})
-
+    					var pacienteTr = montaTr(paciente);
+    					var tabela = document.querySelector("#tabela-pacientes");
+    					tabela.appendChild(pacienteTr);
+					})
     			}else{
     					console.log( xhr.status);
-    					console.log( xhr.responseText);
+    					console.log( xhr.responseText)
     			}
     			});
 
     			xhr.send();
-    		});
+    		
+					})
 
 			</script>
 	</body>
